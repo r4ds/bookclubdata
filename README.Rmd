@@ -16,6 +16,10 @@ knitr::opts_chunk$set(
 # bookclubdata
 
 <!-- badges: start -->
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![CRAN status](https://www.r-pkg.org/badges/version/bookclubdata)](https://CRAN.R-project.org/package=bookclubdata)
+[![Codecov test coverage](https://codecov.io/gh/r4ds/bookclubdata/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r4ds/bookclubdata?branch=main)
+[![R-CMD-check](https://github.com/r4ds/bookclubdata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r4ds/bookclubdata/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 Functions to fetch, parse, and save R4DS book club data.
