@@ -9,8 +9,17 @@ License: MIT + file LICENSE
 URL: https://github.com/r4ds/bookclubdata,
     https://r4ds.github.io/bookclubdata/
 BugReports: https://github.com/r4ds/bookclubdata/issues
+Imports: 
+    base64enc,
+    cli,
+    googledrive,
+    googlesheets4,
+    lubridate,
+    memoise,
+    withr
 Suggests: 
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tibble
 Config/testthat/edition: 3
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
