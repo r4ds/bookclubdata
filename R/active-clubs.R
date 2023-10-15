@@ -62,7 +62,6 @@ active_clubs_times <- function(refresh = FALSE) {
 .active_clubs_rds_write <- function(active_clubs) {
   .rds_update(active_clubs, .active_clubs_rds_file_id)
   memoise::forget(.active_clubs_rds_read)
-  memoise::forget(.rds_timestamp)
   return(.active_clubs_rds_read())
 }
 
