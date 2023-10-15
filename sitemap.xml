@@ -34,6 +34,21 @@
     <loc>https://r4ds.github.io/bookclubdata/reference/bookclubdata-package.html</loc>
   </url>
   <url>
+    <loc>https://r4ds.github.io/bookclubdata/reference/dot-make_single_utc.html</loc>
+  </url>
+  <url>
+    <loc>https://r4ds.github.io/bookclubdata/reference/dot-make_utc.html</loc>
+  </url>
+  <url>
+    <loc>https://r4ds.github.io/bookclubdata/reference/dot-next_weekday.html</loc>
+  </url>
+  <url>
+    <loc>https://r4ds.github.io/bookclubdata/reference/dot-tz_minutes.html</loc>
+  </url>
+  <url>
     <loc>https://r4ds.github.io/bookclubdata/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>https://r4ds.github.io/bookclubdata/reference/signups.html</loc>
   </url>
 </urlset>
