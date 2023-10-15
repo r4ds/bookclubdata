@@ -2,3 +2,5 @@
 
 export(active_clubs_times)
 export(approved_books)
+export(signups)
+importFrom(rlang,.data)

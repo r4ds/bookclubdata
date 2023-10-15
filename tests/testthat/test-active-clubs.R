@@ -62,7 +62,9 @@ test_that("Can fetch active clubs", {
     }
   )
   expect_message(
-    {test_result <- active_clubs_times()},
+    {
+      test_result <- active_clubs_times()
+    },
     "Downloading googledrive file .+"
   )
   expect_identical(test_result, clean_tibble)
@@ -79,12 +81,18 @@ test_that("Re-fetch memoisation works", {
     .googledrive_timestamp = function(...) 1
   )
   expect_message(
-    {test_result <- active_clubs_times()},
+    {
+      test_result <- active_clubs_times()
+    },
     "Reading rds"
   )
-  expect_no_message({test_result <- active_clubs_times()})
+  expect_no_message({
+    test_result <- active_clubs_times()
+  })
   expect_message(
-    {test_result <- active_clubs_times(refresh = TRUE)},
+    {
+      test_result <- active_clubs_times(refresh = TRUE)
+    },
     "Reading rds"
   )
   memoise::forget(.active_clubs_times_impl)

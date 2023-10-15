@@ -12,11 +12,13 @@ BugReports: https://github.com/r4ds/bookclubdata/issues
 Imports: 
     base64enc,
     cli,
+    dplyr,
     googledrive,
     googlesheets4,
     lubridate,
     memoise,
     purrr,
+    rlang,
     stringr,
     withr
 Suggests: 

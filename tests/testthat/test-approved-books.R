@@ -64,7 +64,9 @@ test_that("Can fetch approved books", {
     }
   )
   expect_message(
-    {test_result <- approved_books()},
+    {
+      test_result <- approved_books()
+    },
     "Downloading googledrive file x"
   )
   expect_identical(test_result, clean_tibble)
@@ -81,12 +83,18 @@ test_that("Re-fetch memoisation works", {
     .googledrive_timestamp = function(...) 1
   )
   expect_message(
-    {test_result <- approved_books()},
+    {
+      test_result <- approved_books()
+    },
     "Reading rds"
   )
-  expect_no_message({test_result <- approved_books()})
+  expect_no_message({
+    test_result <- approved_books()
+  })
   expect_message(
-    {test_result <- approved_books(refresh = TRUE)},
+    {
+      test_result <- approved_books(refresh = TRUE)
+    },
     "Reading rds"
   )
   memoise::forget(.approved_books_impl)
