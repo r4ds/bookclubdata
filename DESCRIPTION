@@ -16,6 +16,7 @@ Imports:
     googlesheets4,
     lubridate,
     memoise,
+    purrr,
     stringr,
     withr
 Suggests: 
