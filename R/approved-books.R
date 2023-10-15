@@ -47,7 +47,7 @@ approved_books <- function(refresh = FALSE) {
     approved_books$book_copyright,
     .approved_books_copyright_clean
   )
-  return(approved_books)
+  return(approved_books[order(tolower(approved_books$book_name)),])
 }
 
 .approved_books_copyright_clean <- function(x) {

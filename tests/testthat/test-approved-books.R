@@ -1,15 +1,15 @@
 test_that("Can update approved books", {
   raw_sheet_tibble <- tibble::tibble(
-    book_url = c("https://x.com", "https://y.com"),
-    book_name = c("x", "y"),
+    book_url = c("https://y.com", "https://x.com"),
+    book_name = c("Y", "x"),
     book_authors = c("a", "b"),
     book_copyright = list(NULL, lubridate::ymd("2020-01-01"))
   )
   clean_tibble <- tibble::tibble(
     book_url = c("https://x.com", "https://y.com"),
-    book_name = c("x", "y"),
-    book_authors = c("a", "b"),
-    book_copyright = c("", "2020-01-01")
+    book_name = c("x", "Y"),
+    book_authors = c("b", "a"),
+    book_copyright = c("2020-01-01", "")
   )
   local_mocked_bindings(
     .rds_timestamp = function(...) 1,
@@ -40,16 +40,16 @@ test_that("Can update approved books", {
 
 test_that("Can fetch approved books", {
   raw_sheet_tibble <- tibble::tibble(
-    book_url = c("https://x.com", "https://y.com"),
-    book_name = c("x", "y"),
+    book_url = c("https://y.com", "https://x.com"),
+    book_name = c("Y", "x"),
     book_authors = c("a", "b"),
     book_copyright = list(NULL, lubridate::ymd("2020-01-01"))
   )
   clean_tibble <- tibble::tibble(
     book_url = c("https://x.com", "https://y.com"),
-    book_name = c("x", "y"),
-    book_authors = c("a", "b"),
-    book_copyright = c("", "2020-01-01")
+    book_name = c("x", "Y"),
+    book_authors = c("b", "a"),
+    book_copyright = c("2020-01-01", "")
   )
   local_mocked_bindings(
     .rds_timestamp = function(...) 2,
@@ -65,7 +65,7 @@ test_that("Can fetch approved books", {
   )
   expect_message(
     {test_result <- approved_books()},
-    "Downloading googledrive file .+"
+    "Downloading googledrive file x"
   )
   expect_identical(test_result, clean_tibble)
   memoise::forget(.approved_books_impl)
