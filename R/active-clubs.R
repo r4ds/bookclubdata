@@ -1,8 +1,3 @@
-# This is better, but it still updates any time someone submits a time (or
-# whatever), rather than when the list of clubs changes. Ideally I should have
-# an API that Google Sheets calls to update the RDS when the list of clubs
-# actually changes.
-
 .active_clubs_rds_file_id <- "1qvi47OCP14zruj8cnOR3AvlWUR-TBICc"
 .active_clubs_googlesheet_id <- "1xZbG0IMgvV1ySTA1dOvdM6GuikrHPhePJxYDqzTratA"
 
