@@ -4,7 +4,7 @@
 # actually changes.
 
 .active_clubs_rds_file_id <- "1qvi47OCP14zruj8cnOR3AvlWUR-TBICc"
-.clubs_googlesheet_id <- "1G5KjY77ONuaHj530ttzrhCS9WN4_muYxfLgP3xK24Cc"
+.active_clubs_googlesheet_id <- "1xZbG0IMgvV1ySTA1dOvdM6GuikrHPhePJxYDqzTratA"
 
 #' Load Active Book Club Times
 #'
@@ -27,7 +27,7 @@ active_clubs_times <- function(refresh = FALSE) {
 
 .active_clubs_times_impl <- function() {
   rds_timestamp <- .rds_timestamp(.active_clubs_rds_file_id)
-  sheet_timestamp <- .googledrive_timestamp(.clubs_googlesheet_id)
+  sheet_timestamp <- .googledrive_timestamp(.active_clubs_googlesheet_id)
   if (rds_timestamp < sheet_timestamp) {
     return(.active_clubs_rds_update())
   }
@@ -41,22 +41,23 @@ active_clubs_times <- function(refresh = FALSE) {
 }
 
 .active_clubs_sheet_read <- function() {
-  .googlesheet_read(.clubs_googlesheet_id, sheet = "Clubs")
+  .googlesheet_read(.active_clubs_googlesheet_id, sheet = "raw_clubs")
 }
 
 .active_clubs_clean <- function(active_clubs) {
   colnames(active_clubs) <- c(
     "club",
     "day_utc",
-    "hour_utc",
-    "cleanname",
-    "facilitator",
-    "book_abbr"
+    "hour_utc"
   )
-  active_clubs$club <- active_clubs$cleanname
-  active_clubs$cleanname <- NULL
+  active_clubs$club <- .active_clubs_clean_name(active_clubs$club)
   active_clubs$hour_utc <- as.integer(active_clubs$hour_utc)
   return(active_clubs)
+}
+
+.active_clubs_clean_name <- function(raw_names) {
+  raw_names[raw_names == "(leave open for Project Club)"] <- "project_club"
+  return(stringr::str_extract(raw_names, "^[a-zA-Z0-9_]+"))
 }
 
 .active_clubs_rds_write <- function(active_clubs) {

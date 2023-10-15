@@ -16,6 +16,7 @@ Imports:
     googlesheets4,
     lubridate,
     memoise,
+    stringr,
     withr
 Suggests: 
     testthat (>= 3.0.0),
