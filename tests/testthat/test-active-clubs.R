@@ -4,17 +4,12 @@ test_that("Can update active clubs", {
   raw_sheet_tibble <- tibble::tibble(
     Club = c("A01", "B01"),
     "Day (UTC)" = c("Monday", "Tuesday"),
-    "Hour (UTC)" = c(1, 2),
-    "Clean Name" = c("a01", "b01"),
-    Facilitator = c("C", "D"),
-    book_abbr = c("a", "b")
+    "Hour (UTC)" = c(1, 2)
   )
   clean_tibble <- tibble::tibble(
     club = c("a01", "b01"),
     day_utc = c("Monday", "Tuesday"),
-    hour_utc = c(1L, 2L),
-    facilitator = c("C", "D"),
-    book_abbr = c("a", "b")
+    hour_utc = c(1L, 2L)
   )
   local_mocked_bindings(
     .rds_timestamp = function(...) 1,
@@ -24,7 +19,7 @@ test_that("Can update active clubs", {
     },
     .googledrive_timestamp = function(...) 2,
     .googlesheet_read = function(...) {
-      message("Reading from x, sheet Clubs")
+      message("Reading from x, sheet raw_clubs")
       raw_sheet_tibble
     },
     .rds_update = function(...) invisible()
@@ -34,9 +29,9 @@ test_that("Can update active clubs", {
       {
         test_result <- active_clubs_times()
       },
-      "Reading from .+, sheet Clubs"
+      "Reading from x, sheet raw_clubs"
     ),
-    "Downloading googledrive file .+"
+    "Downloading googledrive file x"
   )
   expect_identical(test_result, clean_tibble)
   memoise::forget(.active_clubs_times_impl)
@@ -47,17 +42,12 @@ test_that("Can fetch active clubs", {
   raw_sheet_tibble <- tibble::tibble(
     Club = c("A01", "B01"),
     "Day (UTC)" = c("Monday", "Tuesday"),
-    "Hour (UTC)" = c(1, 2),
-    "Clean Name" = c("a01", "b01"),
-    Facilitator = c("C", "D"),
-    book_abbr = c("a", "b")
+    "Hour (UTC)" = c(1, 2)
   )
   clean_tibble <- tibble::tibble(
     club = c("a01", "b01"),
     day_utc = c("Monday", "Tuesday"),
-    hour_utc = c(1L, 2L),
-    facilitator = c("C", "D"),
-    book_abbr = c("a", "b")
+    hour_utc = c(1L, 2L)
   )
   local_mocked_bindings(
     .rds_timestamp = function(...) 2,

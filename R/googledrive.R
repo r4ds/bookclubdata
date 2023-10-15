@@ -60,6 +60,7 @@
 .googledrive_update <- function(id, path, ...) {
   .googledrive_authorize()
   googledrive::local_drive_quiet()
+  cli::cli_inform("Updating googledrive file {id}.")
   googledrive::drive_update(
     file = googledrive::as_id(id),
     media = path,
