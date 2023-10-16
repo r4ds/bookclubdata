@@ -34,8 +34,8 @@ test_that("Can update active clubs", {
     "Downloading googledrive file x"
   )
   expect_identical(test_result, clean_tibble)
-  memoise::forget(.active_clubs_times_impl)
-  memoise::forget(.active_clubs_rds_read)
+  memoise::forget(.cached_sheet_impl)
+  memoise::forget(.rds_read)
 })
 
 test_that("Can fetch active clubs", {
@@ -68,14 +68,14 @@ test_that("Can fetch active clubs", {
     "Downloading googledrive file .+"
   )
   expect_identical(test_result, clean_tibble)
-  memoise::forget(.active_clubs_times_impl)
-  memoise::forget(.active_clubs_rds_read)
+  memoise::forget(.cached_sheet_impl)
+  memoise::forget(.rds_read)
 })
 
 test_that("Re-fetch memoisation works", {
   local_mocked_bindings(
     .rds_timestamp = function(...) 2,
-    .active_clubs_rds_read = function(...) {
+    .rds_read = function(...) {
       message("Reading rds")
     },
     .googledrive_timestamp = function(...) 1
@@ -95,6 +95,6 @@ test_that("Re-fetch memoisation works", {
     },
     "Reading rds"
   )
-  memoise::forget(.active_clubs_times_impl)
-  memoise::forget(.active_clubs_rds_read)
+  memoise::forget(.cached_sheet_impl)
+  memoise::forget(.rds_read)
 })

@@ -34,8 +34,8 @@ test_that("Can update approved books", {
     "Downloading googledrive file x"
   )
   expect_identical(test_result, clean_tibble)
-  memoise::forget(.approved_books_impl)
-  memoise::forget(.approved_books_rds_read)
+  memoise::forget(.cached_sheet_impl)
+  memoise::forget(.rds_read)
 })
 
 test_that("Can fetch approved books", {
@@ -70,14 +70,14 @@ test_that("Can fetch approved books", {
     "Downloading googledrive file x"
   )
   expect_identical(test_result, clean_tibble)
-  memoise::forget(.approved_books_impl)
-  memoise::forget(.approved_books_rds_read)
+  memoise::forget(.cached_sheet_impl)
+  memoise::forget(.rds_read)
 })
 
 test_that("Re-fetch memoisation works", {
   local_mocked_bindings(
     .rds_timestamp = function(...) 2,
-    .approved_books_rds_read = function(...) {
+    .rds_read = function(...) {
       message("Reading rds")
     },
     .googledrive_timestamp = function(...) 1
@@ -97,6 +97,6 @@ test_that("Re-fetch memoisation works", {
     },
     "Reading rds"
   )
-  memoise::forget(.approved_books_impl)
-  memoise::forget(.approved_books_rds_read)
+  memoise::forget(.cached_sheet_impl)
+  memoise::forget(.rds_read)
 })

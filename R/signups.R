@@ -1,6 +1,3 @@
-.signups_rds_file_id <- "1V11PtVywfXS_Tya3wMFEaioOMuUDOJSS"
-.signups_googlesheet_id <- "1G5KjY77ONuaHj530ttzrhCS9WN4_muYxfLgP3xK24Cc"
-
 #' Process Signups
 #'
 #' Book club signups are logged in a Google Sheet, then parsed into an RDS. This
@@ -14,33 +11,12 @@
 #'   `timezone`, and `datetime_utc`.
 #' @export
 signups <- function(refresh = FALSE) {
-  if (refresh) {
-    memoise::forget(.signups_impl)
-  }
-  return(.signups_impl())
-}
-
-.signups_impl <- function() {
-  rds_timestamp <- .rds_timestamp(.signups_rds_file_id)
-  sheet_timestamp <- .googledrive_timestamp(.signups_googlesheet_id)
-  if (rds_timestamp < sheet_timestamp) {
-    return(.signups_rds_update())
-  }
-  return(.signups_rds_read())
-}
-
-.signups_rds_update <- function() {
-  signups <- .signups_sheet_read()
-  signups <- .signups_clean(signups)
-  return(.signups_rds_write(signups))
-}
-
-.signups_sheet_read <- function() {
-  .googlesheet_read(
-    .signups_googlesheet_id,
-    sheet = "Signups",
-    range = "A:H",
-    col_types = "ccccccil"
+  .cached_sheet_fetch(
+    refresh = refresh,
+    rds_file_id = "1V11PtVywfXS_Tya3wMFEaioOMuUDOJSS",
+    googlesheet_id = "1G5KjY77ONuaHj530ttzrhCS9WN4_muYxfLgP3xK24Cc",
+    read_args = list(sheet = "Signups", range = "A:H", col_types = "ccccccil"),
+    cleaner_fn = .signups_clean
   )
 }
 
@@ -85,16 +61,4 @@ signups <- function(refresh = FALSE) {
     dplyr::ungroup() |>
     dplyr::select(-"day", -"hour", -"available")
   return(signups)
-}
-
-.signups_rds_write <- function(signups) {
-  .rds_update(signups, .signups_rds_file_id)
-  memoise::forget(.signups_rds_read)
-  return(.signups_rds_read())
-}
-
-.signups_rds_read <- function() {
-  path <- withr::local_tempfile(fileext = ".rds")
-  .googledrive_download(.signups_rds_file_id, path)
-  return(readRDS(path))
 }
