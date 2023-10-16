@@ -17,3 +17,9 @@
   saveRDS(x, path)
   .googledrive_update(id, path)
 }
+
+.rds_read <- function(rds_file_id) {
+  path <- withr::local_tempfile(fileext = ".rds")
+  .googledrive_download(rds_file_id, path)
+  return(readRDS(path))
+}

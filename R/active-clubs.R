@@ -1,6 +1,3 @@
-.active_clubs_rds_file_id <- "1qvi47OCP14zruj8cnOR3AvlWUR-TBICc"
-.active_clubs_googlesheet_id <- "1xZbG0IMgvV1ySTA1dOvdM6GuikrHPhePJxYDqzTratA"
-
 #' Load Active Book Club Times
 #'
 #' Active book club times are stored in a Google Sheet, then parsed into an RDS.
@@ -14,29 +11,13 @@
 #'   and `book_abbr`.
 #' @export
 active_clubs_times <- function(refresh = FALSE) {
-  if (refresh) {
-    memoise::forget(.active_clubs_times_impl)
-  }
-  return(.active_clubs_times_impl())
-}
-
-.active_clubs_times_impl <- function() {
-  rds_timestamp <- .rds_timestamp(.active_clubs_rds_file_id)
-  sheet_timestamp <- .googledrive_timestamp(.active_clubs_googlesheet_id)
-  if (rds_timestamp < sheet_timestamp) {
-    return(.active_clubs_rds_update())
-  }
-  return(.active_clubs_rds_read())
-}
-
-.active_clubs_rds_update <- function() {
-  active_clubs <- .active_clubs_sheet_read()
-  active_clubs <- .active_clubs_clean(active_clubs)
-  return(.active_clubs_rds_write(active_clubs))
-}
-
-.active_clubs_sheet_read <- function() {
-  .googlesheet_read(.active_clubs_googlesheet_id, sheet = "raw_clubs")
+  .cached_sheet_fetch(
+    refresh = refresh,
+    rds_file_id = "1qvi47OCP14zruj8cnOR3AvlWUR-TBICc",
+    googlesheet_id = "1xZbG0IMgvV1ySTA1dOvdM6GuikrHPhePJxYDqzTratA",
+    read_args = list(sheet = "raw_clubs"),
+    cleaner_fn = .active_clubs_clean
+  )
 }
 
 .active_clubs_clean <- function(active_clubs) {
@@ -53,16 +34,4 @@ active_clubs_times <- function(refresh = FALSE) {
 .active_clubs_clean_name <- function(raw_names) {
   raw_names[raw_names == "(leave open for Project Club)"] <- "project_club"
   return(stringr::str_extract(raw_names, "^[a-zA-Z0-9_]+"))
-}
-
-.active_clubs_rds_write <- function(active_clubs) {
-  .rds_update(active_clubs, .active_clubs_rds_file_id)
-  memoise::forget(.active_clubs_rds_read)
-  return(.active_clubs_rds_read())
-}
-
-.active_clubs_rds_read <- function() {
-  path <- withr::local_tempfile(fileext = ".rds")
-  .googledrive_download(.active_clubs_rds_file_id, path)
-  return(readRDS(path))
 }

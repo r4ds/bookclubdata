@@ -47,8 +47,8 @@ test_that("Can update signups", {
     "Downloading googledrive file x"
   )
   expect_identical(test_result, clean_tibble)
-  memoise::forget(.signups_impl)
-  memoise::forget(.signups_rds_read)
+  memoise::forget(.cached_sheet_impl)
+  memoise::forget(.rds_read)
 })
 
 test_that("Can fetch signups", {
@@ -96,14 +96,14 @@ test_that("Can fetch signups", {
     "Downloading googledrive file x"
   )
   expect_identical(test_result, clean_tibble)
-  memoise::forget(.signups_impl)
-  memoise::forget(.signups_rds_read)
+  memoise::forget(.cached_sheet_impl)
+  memoise::forget(.rds_read)
 })
 
 test_that("Re-fetch memoisation works", {
   local_mocked_bindings(
     .rds_timestamp = function(...) 2,
-    .signups_rds_read = function(...) {
+    .rds_read = function(...) {
       message("Reading rds")
     },
     .googledrive_timestamp = function(...) 1
@@ -123,6 +123,6 @@ test_that("Re-fetch memoisation works", {
     },
     "Reading rds"
   )
-  memoise::forget(.signups_impl)
-  memoise::forget(.signups_rds_read)
+  memoise::forget(.cached_sheet_impl)
+  memoise::forget(.rds_read)
 })
