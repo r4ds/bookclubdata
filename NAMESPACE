@@ -3,4 +3,7 @@
 export(active_clubs_times)
 export(approved_books)
 export(signups)
+export(signups_clear_user_book)
+export(signups_read)
+export(signups_write)
 importFrom(rlang,.data)

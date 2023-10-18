@@ -48,7 +48,7 @@ test_that("Can update signups", {
   )
   expect_identical(test_result, clean_tibble)
   memoise::forget(.cached_sheet_impl)
-  memoise::forget(.rds_read)
+  memoise::forget(.rds_read_impl)
 })
 
 test_that("Can fetch signups", {
@@ -97,7 +97,7 @@ test_that("Can fetch signups", {
   )
   expect_identical(test_result, clean_tibble)
   memoise::forget(.cached_sheet_impl)
-  memoise::forget(.rds_read)
+  memoise::forget(.rds_read_impl)
 })
 
 test_that("Re-fetch memoisation works", {
@@ -124,5 +124,5 @@ test_that("Re-fetch memoisation works", {
     "Reading rds"
   )
   memoise::forget(.cached_sheet_impl)
-  memoise::forget(.rds_read)
+  memoise::forget(.rds_read_impl)
 })

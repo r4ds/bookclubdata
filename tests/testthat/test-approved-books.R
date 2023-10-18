@@ -35,7 +35,7 @@ test_that("Can update approved books", {
   )
   expect_identical(test_result, clean_tibble)
   memoise::forget(.cached_sheet_impl)
-  memoise::forget(.rds_read)
+  memoise::forget(.rds_read_impl)
 })
 
 test_that("Can fetch approved books", {
@@ -71,7 +71,7 @@ test_that("Can fetch approved books", {
   )
   expect_identical(test_result, clean_tibble)
   memoise::forget(.cached_sheet_impl)
-  memoise::forget(.rds_read)
+  memoise::forget(.rds_read_impl)
 })
 
 test_that("Re-fetch memoisation works", {
@@ -98,5 +98,5 @@ test_that("Re-fetch memoisation works", {
     "Reading rds"
   )
   memoise::forget(.cached_sheet_impl)
-  memoise::forget(.rds_read)
+  memoise::forget(.rds_read_impl)
 })

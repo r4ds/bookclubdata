@@ -39,7 +39,6 @@ signups <- function(refresh = FALSE) {
     .data$hour,
     .keep_all = TRUE
   )
-  signups$submission_timestamp <- NULL
   return(signups)
 }
 
