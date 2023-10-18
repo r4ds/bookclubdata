@@ -15,7 +15,7 @@ approved_books <- function(refresh = FALSE) {
     refresh = refresh,
     rds_file_id = "15qpYCpaUTa9RvaWf4TCWmi4oGgbz58BZ",
     googlesheet_id = "19gm6rODTwU192cU_0vwAt8UQ9bU78OHgKKrd_3sCzA8",
-    read_args = list(sheet = "approved", range = "B:E"),
+    read_args = list(sheet = "approved", range = "B:F"),
     cleaner_fn = .approved_books_clean
   )
 }

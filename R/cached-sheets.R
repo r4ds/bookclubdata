@@ -3,17 +3,21 @@
                                 googlesheet_id,
                                 read_args = list(),
                                 cleaner_fn = NULL) {
-  args <- list(
-    rds_file_id = rds_file_id,
-    googlesheet_id = googlesheet_id,
-    read_args = read_args,
-    cleaner_fn = cleaner_fn
-  )
   if (refresh) {
-    rlang::inject(.cached_sheet_drop_cache(!!!args))
+    .cached_sheet_drop_cache(
+      rds_file_id = rds_file_id,
+      googlesheet_id = googlesheet_id,
+      read_args = read_args,
+      cleaner_fn = cleaner_fn
+    )
   }
   return(
-    rlang::inject(.cached_sheet_impl(!!!args))
+    .cached_sheet_impl(
+      rds_file_id = rds_file_id,
+      googlesheet_id = googlesheet_id,
+      read_args = read_args,
+      cleaner_fn = cleaner_fn
+    )
   )
 }
 
@@ -63,6 +67,5 @@
 
 .cached_sheet_rds_write <- function(cached_sheet, rds_file_id) {
   .rds_update(cached_sheet, rds_file_id)
-  memoise::drop_cache(.rds_read)(rds_file_id)
   return(.rds_read(rds_file_id))
 }

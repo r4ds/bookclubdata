@@ -1,5 +1,3 @@
-# This is *only* testing things specifically in active-clubs.R.
-
 test_that("Can update active clubs", {
   raw_sheet_tibble <- tibble::tibble(
     Club = c("A01", "B01"),
@@ -35,7 +33,7 @@ test_that("Can update active clubs", {
   )
   expect_identical(test_result, clean_tibble)
   memoise::forget(.cached_sheet_impl)
-  memoise::forget(.rds_read)
+  memoise::forget(.rds_read_impl)
 })
 
 test_that("Can fetch active clubs", {
@@ -69,7 +67,7 @@ test_that("Can fetch active clubs", {
   )
   expect_identical(test_result, clean_tibble)
   memoise::forget(.cached_sheet_impl)
-  memoise::forget(.rds_read)
+  memoise::forget(.rds_read_impl)
 })
 
 test_that("Re-fetch memoisation works", {
@@ -96,5 +94,5 @@ test_that("Re-fetch memoisation works", {
     "Reading rds"
   )
   memoise::forget(.cached_sheet_impl)
-  memoise::forget(.rds_read)
+  memoise::forget(.rds_read_impl)
 })

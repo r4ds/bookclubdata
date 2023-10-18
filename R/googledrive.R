@@ -31,21 +31,21 @@
   return(lubridate::ymd_hms(res$modifiedTime))
 }
 
-.googlesheet_read <- function(ss, sheet, ...) {
+.googlesheet_read <- function(ss, sheet, ..., verbose = FALSE) {
   .googlesheets_authorize()
   googlesheets4::local_gs4_quiet()
-  cli::cli_inform(
-    "Reading from {ss}, sheet {sheet}."
-  )
+  if (verbose) {
+    cli::cli_inform("Reading from {ss}, sheet {sheet}.")
+  }
   googlesheets4::read_sheet(ss, sheet, ...)
 }
 
-.googledrive_download <- function(file, path) {
+.googledrive_download <- function(file, path, verbose = FALSE) {
   .googledrive_authorize()
   googledrive::local_drive_quiet()
-  cli::cli_inform(
-    "Downloading googledrive file {file}."
-  )
+  if (verbose) {
+    cli::cli_inform("Downloading googledrive file {file}.")
+  }
   googledrive::drive_download(googledrive::as_id(file), path)
 }
 
@@ -57,10 +57,12 @@
   return(res$id)
 }
 
-.googledrive_update <- function(id, path, ...) {
+.googledrive_update <- function(id, path, ..., verbose = FALSE) {
   .googledrive_authorize()
   googledrive::local_drive_quiet()
-  cli::cli_inform("Updating googledrive file {id}.")
+  if (verbose) {
+    cli::cli_inform("Updating googledrive file {id}.")
+  }
   googledrive::drive_update(
     file = googledrive::as_id(id),
     media = path,
