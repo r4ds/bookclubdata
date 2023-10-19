@@ -74,7 +74,7 @@ test_that("Can save signups to existing rds, new person", {
   expect_message(
     expect_identical(
       signups_write(user_times_df, "Has Data"),
-      dplyr::bind_rows(existing_times_df, user_times_df)
+      rbind(existing_times_df, user_times_df)
     ),
     "Updating rds has_data_file_id"
   )
