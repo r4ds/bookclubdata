@@ -21,11 +21,18 @@
 make_datetimes_utc <- function(days, hours, timezones) {
   datetimes <- .now()
   lubridate::second(datetimes) <- 0L
+  lubridate::minute(datetimes) <- 0L
   lubridate::hour(datetimes) <- hours
   lubridate::wday(datetimes, week_start = 7) <- .days_to_int(days)
-  lubridate::minute(datetimes) <- .tz_minutes(timezones, datetimes)
   datetimes <- .force_week_minimum(datetimes)
-  return(lubridate::force_tzs(datetimes, tzones = timezones, tzone_out = "UTC"))
+  lubridate::minute(datetimes) <- tz_minutes(timezones, datetimes)
+  return(
+    lubridate::force_tzs(
+      datetimes,
+      tzones = timezones,
+      tzone_out = "UTC"
+    )
+  )
 }
 
 .days_to_int <- function(days) {
@@ -45,15 +52,27 @@ make_datetimes_utc <- function(days, hours, timezones) {
   lubridate::now(tzone = tzone) # nocov
 }
 
-.tz_minutes <- function(timezones, datetimes = .now()) {
+#' Convert datetime minutes to 0 or 30
+#'
+#' Determine the minute offset of timezones from UTC on particular dates.
+#'
+#' @param timezones A character vector of timezones.
+#' @param datetimes An optional vector of datetimes.
+#'
+#' @return A vector of 0L or 30L for each timezone.
+#' @export
+#'
+#' @examples
+#' tz_minutes(c("America/Chicago", "Europe/Rome", "Asia/Calcutta"))
+tz_minutes <- function(timezones, datetimes = lubridate::now()) {
   lubridate::minute(datetimes) <- 0L
   return(lubridate::minute(lubridate::force_tzs(datetimes, tzones = timezones)))
 }
 
 .force_week_minimum <- function(datetimes) {
   while (any(datetimes - .now() < lubridate::weeks(1))) {
-    datetimes[datetimes - .now() < lubridate::weeks(1)] <-
-      datetimes[datetimes - .now() < lubridate::weeks(1)] + lubridate::weeks(1)
+    too_small <- datetimes - .now() < lubridate::weeks(1)
+    datetimes[too_small] <- datetimes[too_small] + lubridate::weeks(1)
   }
   return(datetimes)
 }
