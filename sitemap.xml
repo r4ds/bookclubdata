@@ -37,6 +37,9 @@
     <loc>https://r4ds.github.io/bookclubdata/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://r4ds.github.io/bookclubdata/reference/make_datetimes_utc.html</loc>
+  </url>
+  <url>
     <loc>https://r4ds.github.io/bookclubdata/reference/signups_clear_user_book.html</loc>
   </url>
   <url>
@@ -44,5 +47,8 @@
   </url>
   <url>
     <loc>https://r4ds.github.io/bookclubdata/reference/signups_write.html</loc>
+  </url>
+  <url>
+    <loc>https://r4ds.github.io/bookclubdata/reference/tz_minutes.html</loc>
   </url>
 </urlset>
