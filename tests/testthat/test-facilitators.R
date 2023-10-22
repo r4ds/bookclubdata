@@ -20,7 +20,7 @@ test_that("Can update facilitator volunteers", {
   expect_message(
     expect_message(
       {
-        test_result <- read_facilitator_volunteers()
+        test_result <- facilitator_volunteers_read()
       },
       "Reading from x, sheet raw_clubs"
     ),
@@ -51,7 +51,7 @@ test_that("Can fetch facilitators", {
   )
   expect_message(
     {
-      test_result <- read_facilitator_volunteers()
+      test_result <- facilitator_volunteers_read()
     },
     "Downloading googledrive file x"
   )
@@ -70,16 +70,16 @@ test_that("Re-fetch memoisation works", {
   )
   expect_message(
     {
-      test_result <- read_facilitator_volunteers()
+      test_result <- facilitator_volunteers_read()
     },
     "Reading rds"
   )
   expect_no_message({
-    test_result <- read_facilitator_volunteers()
+    test_result <- facilitator_volunteers_read()
   })
   expect_message(
     {
-      test_result <- read_facilitator_volunteers(refresh = TRUE)
+      test_result <- facilitator_volunteers_read(refresh = TRUE)
     },
     "Reading rds"
   )

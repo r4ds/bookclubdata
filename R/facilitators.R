@@ -11,7 +11,7 @@
 #' @return A tibble with columns `facilitator_id`, `facilitator_handle`, and
 #'   `book_abbr`.
 #' @export
-read_facilitator_volunteers <- function(refresh = FALSE) {
+facilitator_volunteers_read <- function(refresh = FALSE) {
   .cached_sheet_fetch(
     refresh = refresh,
     rds_file_id = "1BtddWPooRU9Sia7Ztpf7pW42qOjJPMtw",
