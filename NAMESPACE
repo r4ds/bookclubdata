@@ -2,6 +2,7 @@
 
 export(active_clubs_times)
 export(approved_books)
+export(facilitator_volunteers_read)
 export(make_datetimes_utc)
 export(signups_clear_user_book)
 export(signups_read)
