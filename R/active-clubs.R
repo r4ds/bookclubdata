@@ -28,6 +28,7 @@ active_clubs_times <- function(refresh = FALSE) {
   )
   active_clubs$club <- .active_clubs_clean_name(active_clubs$club)
   active_clubs$hour_utc <- as.integer(active_clubs$hour_utc)
+  active_clubs <- active_clubs[!is.na(active_clubs$club), ]
   return(active_clubs)
 }
 
