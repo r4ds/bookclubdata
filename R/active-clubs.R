@@ -33,5 +33,7 @@ active_clubs_times <- function(refresh = FALSE) {
 
 .active_clubs_clean_name <- function(raw_names) {
   raw_names[raw_names == "(leave open for Project Club)"] <- "project_club"
-  return(stringr::str_extract(raw_names, "^[a-zA-Z0-9_]+"))
+  club_names <- stringr::str_extract(raw_names, "^[a-zA-Z0-9_]+")
+  club_names[is.na(club_names)] <- "bad_club_name"
+  return(club_names)
 }
