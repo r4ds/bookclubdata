@@ -7,7 +7,11 @@ test_that("Can update active clubs", {
   clean_tibble <- tibble::tibble(
     club = c("a01", "b01"),
     day_utc = c("Monday", "Tuesday"),
-    hour_utc = c(1L, 2L)
+    hour_utc = c(1L, 2L),
+    datetime_utc = c(
+      lubridate::ymd_hms("2023-11-06 01:00:00 UTC"),
+      lubridate::ymd_hms("2023-11-07 02:00:00 UTC")
+    )
   )
   local_mocked_bindings(
     .rds_timestamp = function(...) 1,
@@ -22,18 +26,16 @@ test_that("Can update active clubs", {
     },
     .rds_update = function(...) invisible()
   )
-  expect_message(
-    expect_message(
-      {
-        test_result <- active_clubs_times()
-      },
-      "Reading from x, sheet raw_clubs"
-    ),
-    "Downloading googledrive file x"
-  )
+  expect_message(expect_message(
+    {
+      test_result <- active_clubs_times()
+    },
+    "Reading from x, sheet raw_clubs"
+  ), "Downloading googledrive file x")
   expect_identical(test_result, clean_tibble)
   memoise::forget(.cached_sheet_impl)
   memoise::forget(.rds_read_impl)
+  memoise::forget(active_clubs_times)
 })
 
 test_that("Can fetch active clubs", {
@@ -45,7 +47,11 @@ test_that("Can fetch active clubs", {
   clean_tibble <- tibble::tibble(
     club = c("a01", "b01"),
     day_utc = c("Monday", "Tuesday"),
-    hour_utc = c(1L, 2L)
+    hour_utc = c(1L, 2L),
+    datetime_utc = c(
+      lubridate::ymd_hms("2023-11-06 01:00:00 UTC"),
+      lubridate::ymd_hms("2023-11-07 02:00:00 UTC")
+    )
   )
   local_mocked_bindings(
     .rds_timestamp = function(...) 2,
@@ -68,31 +74,34 @@ test_that("Can fetch active clubs", {
   expect_identical(test_result, clean_tibble)
   memoise::forget(.cached_sheet_impl)
   memoise::forget(.rds_read_impl)
+  memoise::forget(active_clubs_times)
 })
 
 test_that("Re-fetch memoisation works", {
   local_mocked_bindings(
-    .rds_timestamp = function(...) 2,
-    .rds_read = function(...) {
-      message("Reading rds")
+    .cached_sheet_fetch = function(...) {
+      message("Checking cache")
     },
-    .googledrive_timestamp = function(...) 1
+    make_datetimes_utc = function(...) {
+      message("Making datetimes")
+    }
   )
-  expect_message(
+  expect_message(expect_message(
     {
       test_result <- active_clubs_times()
     },
-    "Reading rds"
-  )
+    "Checking cache"
+  ), "Making datetimes")
   expect_no_message({
     test_result <- active_clubs_times()
   })
-  expect_message(
+  expect_message(expect_message(
     {
-      test_result <- active_clubs_times(refresh = TRUE)
+      test_result <- active_clubs_times(effective_date = "anything new")
     },
-    "Reading rds"
-  )
+    "Checking cache"
+  ), "Making datetimes")
   memoise::forget(.cached_sheet_impl)
   memoise::forget(.rds_read_impl)
+  memoise::forget(active_clubs_times)
 })
