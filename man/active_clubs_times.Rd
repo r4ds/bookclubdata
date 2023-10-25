@@ -4,14 +4,13 @@
 \alias{active_clubs_times}
 \title{Load Active Book Club Times}
 \usage{
-active_clubs_times(refresh = FALSE)
+active_clubs_times(effective_date = lubridate::today())
 }
 \arguments{
-\item{refresh}{Set this to \code{TRUE} to check for updates to the Google Sheet.}
+\item{effective_date}{Pass a specific date to update the cached value.}
 }
 \value{
-A tibble with columns \code{club}, \code{day_utc}, \code{hour_utc}, \code{facilitator},
-and \code{book_abbr}.
+A tibble with columns \code{club}, \code{day_utc}, \code{hour_utc}, and \code{date_utc}.
 }
 \description{
 Active book club times are stored in a Google Sheet, then parsed into an RDS.
