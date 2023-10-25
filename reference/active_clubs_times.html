@@ -16,7 +16,7 @@ returns the same result unless it is told to refresh."><!-- mathjax --><script s
     
     <a class="navbar-brand me-2" href="../index.html">bookclubdata</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,21 +57,20 @@ returns the same result unless it is told to refresh.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">active_clubs_times</span><span class="op">(</span>refresh <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">active_clubs_times</span><span class="op">(</span>effective_date <span class="op">=</span> <span class="fu">lubridate</span><span class="fu">::</span><span class="fu"><a href="https://lubridate.tidyverse.org/reference/now.html" class="external-link">today</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
-    <dl><dt>refresh</dt>
-<dd><p>Set this to <code>TRUE</code> to check for updates to the Google Sheet.</p></dd>
+    <dl><dt>effective_date</dt>
+<dd><p>Pass a specific date to update the cached value.</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
     
 
-<p>A tibble with columns <code>club</code>, <code>day_utc</code>, <code>hour_utc</code>, <code>facilitator</code>,
-and <code>book_abbr</code>.</p>
+<p>A tibble with columns <code>club</code>, <code>day_utc</code>, <code>hour_utc</code>, and <code>date_utc</code>.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
