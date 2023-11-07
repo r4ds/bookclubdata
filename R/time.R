@@ -76,3 +76,11 @@ tz_minutes <- function(timezones, datetimes = lubridate::now()) {
   }
   return(datetimes)
 }
+
+.update_datetime_utc <- function(datetimes) {
+  make_datetimes_utc(
+    days = lubridate::wday(datetimes, label = TRUE, abbr = FALSE),
+    hours = lubridate::hour(datetimes),
+    timezones = lubridate::tz(datetimes)
+  )
+}

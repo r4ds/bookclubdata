@@ -25,3 +25,20 @@ test_that("Can make datetimes", {
     )
   )
 })
+
+test_that("Can update datetimes", {
+  starting_datetimes <- c(
+    lubridate::ymd_hms("2023-11-06 01:00:00 UTC"),
+    lubridate::ymd_hms("2023-11-07 02:00:00 UTC")
+  )
+  updated_datetimes <- c(
+    lubridate::ymd_hms("2024-10-28 01:00:00 UTC"),
+    lubridate::ymd_hms("2024-10-29 02:00:00 UTC")
+  )
+  local_mocked_bindings(
+    .now = function(tzone = "UTC") {
+      lubridate::ymd_hms("2024-10-19 15:26:29", tz = tzone)
+    }
+  )
+  expect_identical(.update_datetime_utc(starting_datetimes), updated_datetimes)
+})
