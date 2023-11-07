@@ -4,14 +4,15 @@ test_that("Can update active clubs", {
     "Day (UTC)" = c("Monday", "Tuesday"),
     "Hour (UTC)" = c(1, 2)
   )
+  datetimes <- c(
+    lubridate::ymd_hms("2023-11-06 01:00:00 UTC"),
+    lubridate::ymd_hms("2023-11-07 02:00:00 UTC")
+  )
   clean_tibble <- tibble::tibble(
     club = c("a01", "b01"),
     day_utc = c("Monday", "Tuesday"),
     hour_utc = c(1L, 2L),
-    datetime_utc = c(
-      lubridate::ymd_hms("2023-11-06 01:00:00 UTC"),
-      lubridate::ymd_hms("2023-11-07 02:00:00 UTC")
-    )
+    datetime_utc = datetimes
   )
   local_mocked_bindings(
     .rds_timestamp = function(...) 1,
@@ -24,7 +25,11 @@ test_that("Can update active clubs", {
       message("Reading from x, sheet raw_clubs")
       raw_sheet_tibble
     },
-    .rds_update = function(...) invisible()
+    .rds_update = function(...) invisible(),
+    make_datetimes_utc = function(...) {
+      message("Making datetimes")
+      return(datetimes)
+    }
   )
   expect_message(expect_message(
     {
@@ -44,14 +49,15 @@ test_that("Can fetch active clubs", {
     "Day (UTC)" = c("Monday", "Tuesday"),
     "Hour (UTC)" = c(1, 2)
   )
+  datetimes <- c(
+    lubridate::ymd_hms("2023-11-06 01:00:00 UTC"),
+    lubridate::ymd_hms("2023-11-07 02:00:00 UTC")
+  )
   clean_tibble <- tibble::tibble(
     club = c("a01", "b01"),
     day_utc = c("Monday", "Tuesday"),
     hour_utc = c(1L, 2L),
-    datetime_utc = c(
-      lubridate::ymd_hms("2023-11-06 01:00:00 UTC"),
-      lubridate::ymd_hms("2023-11-07 02:00:00 UTC")
-    )
+    datetime_utc = datetimes
   )
   local_mocked_bindings(
     .rds_timestamp = function(...) 2,
@@ -63,6 +69,10 @@ test_that("Can fetch active clubs", {
     .googlesheet_read = function(...) {
       message("Reading from x, sheet Clubs")
       raw_sheet_tibble
+    },
+    make_datetimes_utc = function(...) {
+      message("Making datetimes")
+      return(datetimes)
     }
   )
   expect_message(

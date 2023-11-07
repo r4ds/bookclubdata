@@ -11,7 +11,9 @@
 signups_read <- function(book_name, refresh = FALSE) {
   file_id <- .signups_file_id(book_name)
   if (length(file_id)) {
-    return(.rds_read(file_id, refresh = refresh))
+    signups <- .rds_read(file_id, refresh = refresh)
+    signups$datetime_utc <- .update_datetime_utc(signups$datetime_utc)
+    return(signups)
   }
   return(
     tibble::tibble(

@@ -178,7 +178,11 @@ test_that("Can clear existing signups for an existing person", {
 test_that("Can read existing signups", {
   existing_times_df <- tibble::tibble(
     user_id = c("existing_person", "other_person"),
-    data = "old data"
+    data = "old data",
+    datetime_utc = c(
+      lubridate::ymd_hms("2023-11-06 01:00:00 UTC"),
+      lubridate::ymd_hms("2023-11-07 02:00:00 UTC")
+    )
   )
   local_mocked_bindings(
     approved_books = function() {
@@ -208,6 +212,9 @@ test_that("Can read existing signups", {
       } else {
         stop("unexpectd file_id")
       }
+    },
+    .update_datetime_utc = function(datetimes) {
+      return(datetimes)
     }
   )
   expect_identical(signups_read("Has Data"), existing_times_df)
