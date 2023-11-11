@@ -31,12 +31,14 @@ test_that("Can update active clubs", {
       return(datetimes)
     }
   )
-  expect_message(expect_message(
+  expect_message(expect_message(expect_message(
     {
       test_result <- active_clubs_times()
     },
-    "Reading from x, sheet raw_clubs"
-  ), "Downloading googledrive file x")
+    "Reading from x, sheet raw_clubs"),
+    "Downloading googledrive file x"),
+    "Making datetimes"
+  )
   expect_identical(test_result, clean_tibble)
   memoise::forget(.cached_sheet_impl)
   memoise::forget(.rds_read_impl)
@@ -75,11 +77,12 @@ test_that("Can fetch active clubs", {
       return(datetimes)
     }
   )
-  expect_message(
+  expect_message(expect_message(
     {
       test_result <- active_clubs_times()
     },
-    "Downloading googledrive file .+"
+    "Downloading googledrive file .+"),
+    "Making datetimes"
   )
   expect_identical(test_result, clean_tibble)
   memoise::forget(.cached_sheet_impl)
