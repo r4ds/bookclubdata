@@ -42,3 +42,13 @@ test_that("Can update datetimes", {
   )
   expect_identical(.update_datetime_utc(starting_datetimes), updated_datetimes)
 })
+
+test_that("Empty datetimes don't cause errors", {
+  starting_datetimes <- lubridate::POSIXct()
+  local_mocked_bindings(
+    .now = function(tzone = "UTC") {
+      lubridate::ymd_hms("2024-10-19 15:26:29", tz = tzone)
+    }
+  )
+  expect_identical(.update_datetime_utc(starting_datetimes), starting_datetimes)
+})
